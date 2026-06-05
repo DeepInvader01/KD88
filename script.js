@@ -162,7 +162,7 @@ function rowsToPlayers(rows) {
         reduction: normalizePercent(getValue(row, headers, "reduction")),
         dkpGoal,
         goalPercent: goalPercentRaw !== "" ? normalizePercent(goalPercentRaw) : (dkpGoal > 0 ? adjustedDkp / dkpGoal : 0),
-        deadDkpAchieved: normalizePercent(getValue(row, headers, "deadDkpAchieved")),
+        deadDkpAchieved: parseNumber(getValue(row, headers, "deadDkpAchieved")),
         totalKp: parseNumber(getValue(row, headers, "totalKp")),
         t5Deaths: parseNumber(getValue(row, headers, "t5Deaths")),
         t4Deaths: parseNumber(getValue(row, headers, "t4Deaths")),
