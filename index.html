@@ -1,10 +1,95 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>KD3688 DKP Stats</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KD3688 KingdomStats</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <h1>KD3688 DKP Stats</h1>
-    <p>Website is under construction.</p>
+  <header class="site-header">
+    <div>
+      <h1>KD3688 KingdomStats</h1>
+      <p>DKP dashboard and player statistics powered by Google Sheets</p>
+    </div>
+    <nav>
+      <button class="tab-button active" data-tab="dashboard">Dashboard</button>
+      <button class="tab-button" data-tab="details">Detailed Stats</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="controls">
+      <div class="control-group">
+        <label for="datasetSelect">Dataset</label>
+        <select id="datasetSelect"></select>
+      </div>
+      <button id="reloadButton">Reload Data</button>
+      <span id="loadStatus">Loading...</span>
+    </section>
+
+    <section id="dashboard" class="tab-content active">
+      <div class="cards">
+        <div class="card"><span>Total Players</span><strong id="totalPlayers">0</strong></div>
+        <div class="card"><span>Total Adjusted DKP</span><strong id="totalDkp">0</strong></div>
+        <div class="card"><span>Average Goal %</span><strong id="avgGoal">0%</strong></div>
+        <div class="card"><span>Below 70% Goal</span><strong id="belowGoal">0</strong></div>
+      </div>
+
+      <div class="quick-sort">
+        <span>Dashboard Focus:</span>
+        <button class="sort-button active" data-sort="adjustedDkp">Adjusted DKP</button>
+        <button class="sort-button" data-sort="goalPercent">Goal %</button>
+        <button class="sort-button" data-sort="deadDkpAchieved">Dead DKP Achieved</button>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="panel"><h2>Top Adjusted DKP</h2><div id="topAdjustedDkp"></div></div>
+        <div class="panel"><h2>Top Goal %</h2><div id="topGoalPercent"></div></div>
+        <div class="panel"><h2>Top Dead DKP Achieved</h2><div id="topDeadDkp"></div></div>
+        <div class="panel"><h2>Below 70% Goal</h2><div id="lowContributors"></div></div>
+      </div>
+    </section>
+
+    <section id="details" class="tab-content">
+      <div class="table-tools">
+        <input id="searchInput" type="text" placeholder="Search by username or Character ID..." />
+        <div class="quick-sort">
+          <span>Quick sort:</span>
+          <button class="sort-button details-sort active" data-sort="adjustedDkp">Adjusted DKP</button>
+          <button class="sort-button details-sort" data-sort="goalPercent">Goal %</button>
+          <button class="sort-button details-sort" data-sort="deadDkpAchieved">Dead DKP Achieved</button>
+          <button class="sort-button details-sort" data-sort="totalKp">Total KP</button>
+          <button class="sort-button details-sort" data-sort="power">Power</button>
+        </div>
+      </div>
+
+      <div class="table-wrapper">
+        <table id="statsTable">
+          <thead>
+            <tr>
+              <th data-sort="characterId">Character ID</th>
+              <th data-sort="username">Username</th>
+              <th data-sort="power">Power</th>
+              <th data-sort="highestPower">Highest Power</th>
+              <th data-sort="dkp">DKP</th>
+              <th data-sort="adjustedDkp">Adjusted DKP</th>
+              <th data-sort="dkpGoal">DKP Goal</th>
+              <th data-sort="goalPercent">Goal %</th>
+              <th data-sort="deadDkpAchieved">Dead DKP Achieved</th>
+              <th data-sort="totalKp">Total KP</th>
+              <th data-sort="t5Deaths">T5 Deaths</th>
+              <th data-sort="t4Deaths">T4 Deaths</th>
+              <th data-sort="reduction">Reduction</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
