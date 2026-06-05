@@ -43,3 +43,18 @@ v7 changes:
 - Added colored side accents to dashboard panels.
 - Added subtle hover effect to ranking rows.
 - Table remains wider with internal scrollbars.
+
+
+v8 changes:
+- Fixed inconsistent dashboard row heights.
+- All Top lists now use the same two-line structure, even when the second line is empty.
+
+
+v9 changes:
+- Main site width increased to 1850px.
+- Detailed Stats table now has its own `details-table` class and wider min-width.
+- Info page tables are fixed so they do not inherit the wide detailed table layout.
+- Reduction column is color-coded:
+  - Green: no reduction
+  - Yellow: reduced
+  - Red: heavily reduced

@@ -586,3 +586,85 @@ table {
 main {
   width: min(1500px, calc(100% - 28px)) !important;
 }
+
+
+/* v8 consistent dashboard row heights */
+.ranking-row {
+  grid-template-columns: 46px minmax(0, 1fr) auto !important;
+  min-height: 54px !important;
+  align-items: center !important;
+}
+
+.ranking-row > span:nth-child(2) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 36px;
+}
+
+.ranking-subline {
+  display: block;
+  color: var(--muted);
+  margin-top: 3px;
+  font-size: 12px;
+  line-height: 1.2;
+  min-height: 15px;
+}
+
+.ranking-row strong {
+  align-self: center;
+}
+
+
+/* v9 layout and scoped table fixes */
+main {
+  width: min(1850px, calc(100% - 20px)) !important;
+}
+
+.table-wrapper {
+  overflow: auto !important;
+  max-height: 75vh;
+}
+
+.details-table {
+  width: 100%;
+  min-width: 1850px !important;
+  border-collapse: collapse;
+}
+
+.info-table {
+  width: 100% !important;
+  min-width: 0 !important;
+  table-layout: auto;
+}
+
+.info-table th,
+.info-table td {
+  white-space: normal;
+}
+
+/* Reduction color coding */
+.reduction-none {
+  color: var(--success);
+  font-weight: 800;
+}
+
+.reduction-low {
+  color: var(--warning);
+  font-weight: 900;
+  background: rgba(250, 204, 21, 0.10);
+  border-radius: 8px;
+}
+
+.reduction-high {
+  color: var(--danger);
+  font-weight: 900;
+  background: rgba(248, 113, 113, 0.14);
+  border-radius: 8px;
+}
+
+/* Make reduction easier to notice in the table */
+#statsTable td.reduction-low,
+#statsTable td.reduction-high {
+  box-shadow: inset 4px 0 0 currentColor;
+}

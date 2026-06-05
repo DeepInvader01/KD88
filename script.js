@@ -226,6 +226,13 @@ function metricClass(value) {
   return "good";
 }
 
+function reductionClass(value) {
+  const number = Number(value || 0);
+  if (number <= -0.5) return "reduction-high";
+  if (number < 0) return "reduction-low";
+  return "reduction-none";
+}
+
 function getActivePlayers() {
   const threshold = CONFIG.activePlayerThreshold ?? 25000000;
   return players.filter(p => Number(p.power || 0) >= threshold);
@@ -276,7 +283,10 @@ function renderTopList(elementId, key, formatter, percentStyle = false) {
   container.innerHTML = top.map((player, index) => `
     <div class="ranking-row">
       <span>#${index + 1}</span>
-      <span>${player.username || player.characterId}</span>
+      <span>
+        ${player.username || player.characterId}
+        <small class="ranking-subline">&nbsp;</small>
+      </span>
       <strong class="${percentStyle ? metricClass(player[key]) : ""}">${formatter(player[key])}</strong>
     </div>
   `).join("");
@@ -293,7 +303,7 @@ function renderTopDeadGoalList() {
       <span>#${index + 1}</span>
       <span>
         ${player.username || player.characterId}
-        <small style="display:block;color:var(--muted);margin-top:2px;">
+        <small class="ranking-subline">
           T5: ${formatNumber(player.t5Deaths)} | T4: ${formatNumber(player.t4Deaths)}
         </small>
       </span>
@@ -319,7 +329,7 @@ function renderLowContributors() {
       <span>#${index + 1}</span>
       <span>
         ${player.username || player.characterId}
-        <small style="display:block;color:var(--muted);margin-top:2px;">
+        <small class="ranking-subline">
           DKP Goal: ${formatNumber(player.dkpGoal)}
         </small>
       </span>
@@ -365,7 +375,7 @@ function renderTable() {
       <td>${formatNumber(player.totalKp)}</td>
       <td>${formatNumber(player.t5Deaths)}</td>
       <td>${formatNumber(player.t4Deaths)}</td>
-      <td>${formatPercent(player.reduction)}</td>
+      <td class="${reductionClass(player.reduction)}">${formatPercent(player.reduction)}</td>
     </tr>
   `).join("");
 }
