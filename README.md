@@ -34,3 +34,12 @@ v5 style changes:
 - More color variance for navigation and quick-sort buttons.
 - Blue/cyan/purple edge gradient background.
 - More polished dashboard cards and panels.
+
+
+v7 changes:
+- Dashboard panels now use equal height.
+- Top Adjusted DKP and Top Total DKP Goal % align visually.
+- All dashboard panels have consistent row spacing.
+- Added colored side accents to dashboard panels.
+- Added subtle hover effect to ranking rows.
+- Table remains wider with internal scrollbars.

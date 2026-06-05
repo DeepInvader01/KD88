@@ -218,8 +218,7 @@ const formatNumber = value => {
   return Math.round(number).toString();
 };
 
-const formatPercent = value =>
-  `${(Number(value || 0) * 100).toFixed(1)}%`;
+const formatPercent = value => `${(Number(value || 0) * 100).toFixed(1)}%`;
 
 function metricClass(value) {
   if (value < 0.7) return "low";

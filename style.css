@@ -148,7 +148,7 @@ body::before {
 }
 
 main {
-  width: min(1500px, calc(100% - 28px));
+  width: min(1220px, calc(100% - 28px));
   margin: 0 auto;
   padding: 24px 0 60px;
 }
@@ -309,8 +309,7 @@ select:focus, input:focus {
 }
 
 .table-wrapper {
-  overflow: auto;
-  max-height: 75vh;
+  overflow-x: auto;
   background: rgba(15, 23, 42, 0.70);
   border: 1px solid var(--border);
   border-radius: 18px;
@@ -321,7 +320,7 @@ select:focus, input:focus {
 table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 1700px;
+  min-width: 1200px;
 }
 
 th, td {
@@ -465,4 +464,125 @@ tr:hover { background: rgba(56, 189, 248, 0.08); }
   .controls {
     justify-content: flex-start;
   }
+}
+
+
+main{
+  width:min(1500px,calc(100% - 28px)) !important;
+}
+
+.table-wrapper{
+  overflow:auto !important;
+  max-height:75vh;
+}
+
+table{
+  min-width:1700px !important;
+}
+
+.site-footer{
+  margin-top:40px;
+  padding:20px;
+  border-top:1px solid rgba(96,165,250,.15);
+  background:rgba(5,12,24,.5);
+}
+
+.footer-content{
+  max-width:1500px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  gap:20px;
+  color:#8fa3bc;
+}
+
+.footer-content img{
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid rgba(56,189,248,.5);
+}
+
+@media(max-width:700px){
+ .footer-content{
+   flex-direction:column;
+   text-align:center;
+ }
+}
+
+
+/* v7 dashboard polish */
+.dashboard-grid {
+  align-items: stretch !important;
+}
+
+.panel {
+  display: flex !important;
+  flex-direction: column;
+  min-height: 520px;
+  position: relative;
+  overflow: hidden;
+}
+
+.panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(56,189,248,.95), rgba(37,99,235,.25));
+}
+
+.panel:nth-child(2)::before {
+  background: linear-gradient(180deg, rgba(139,92,246,.95), rgba(99,102,241,.25));
+}
+
+.panel:nth-child(3)::before {
+  background: linear-gradient(180deg, rgba(244,114,182,.95), rgba(139,92,246,.25));
+}
+
+.panel:nth-child(4)::before {
+  background: linear-gradient(180deg, rgba(248,113,113,.95), rgba(251,146,60,.25));
+}
+
+.panel h2 {
+  min-height: 34px;
+}
+
+.ranking-row {
+  min-height: 42px;
+  align-items: center;
+}
+
+.ranking-row:hover {
+  background: rgba(56,189,248,.06);
+  border-radius: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-left: -8px;
+  margin-right: -8px;
+}
+
+/* Keep dashboard panels aligned nicely on large screens */
+@media (min-width: 901px) {
+  .dashboard-grid {
+    grid-auto-rows: 1fr;
+  }
+}
+
+/* Table usability */
+.table-wrapper {
+  overflow: auto !important;
+  max-height: 75vh;
+}
+
+table {
+  min-width: 1700px !important;
+}
+
+/* Slightly wider site */
+main {
+  width: min(1500px, calc(100% - 28px)) !important;
 }
