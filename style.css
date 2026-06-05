@@ -148,7 +148,7 @@ body::before {
 }
 
 main {
-  width: min(1220px, calc(100% - 28px));
+  width: min(1500px, calc(100% - 28px));
   margin: 0 auto;
   padding: 24px 0 60px;
 }
