@@ -309,7 +309,8 @@ select:focus, input:focus {
 }
 
 .table-wrapper {
-  overflow-x: auto;
+  overflow: auto;
+  max-height: 75vh;
   background: rgba(15, 23, 42, 0.70);
   border: 1px solid var(--border);
   border-radius: 18px;
@@ -320,7 +321,7 @@ select:focus, input:focus {
 table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 1200px;
+  min-width: 1700px;
 }
 
 th, td {
