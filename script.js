@@ -228,7 +228,7 @@ function metricClass(value) {
 
 function getActivePlayers() {
   const threshold = CONFIG.activePlayerThreshold ?? 25000000;
-  return players.filter(p => Number(p.adjustedDkp || 0) >= threshold);
+  return players.filter(p => Number(p.power || 0) >= threshold);
 }
 
 function setupTabs() {
