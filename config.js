@@ -7,7 +7,7 @@ const CONFIG = {
   // { label: "KvK6 Zone5", sheetName: "KvK6_Zone5" },
   // { label: "KvK6 Pass7 + KL", sheetName: "KvK6_Pass7_KL" },
   datasets: [
-    { label: "KvK6 Total", sheetName: "Overview" }
+    { label: "KvK6 Total", sheetName: "KvK6_Total" }
   ],
 
   // This site expects the Google Sheet tab to have headers in row 1.
