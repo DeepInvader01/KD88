@@ -265,7 +265,7 @@ function renderDashboard() {
 
   renderTopList("topAdjustedDkp", "adjustedDkp", formatNumber);
   renderTopList("topGoalPercent", "goalPercent", formatPercent, true);
-  renderTopList("topDeadDkp", "deadDkpAchieved", formatPercent, true);
+  renderTopDeadGoalList();
   renderLowContributors();
 }
 
@@ -282,22 +282,47 @@ function renderTopList(elementId, key, formatter, percentStyle = false) {
   `).join("");
 }
 
+function renderTopDeadGoalList() {
+  const container = document.getElementById("topDeadDkp");
+  const top = [...players]
+    .sort((a, b) => b.deadDkpAchieved - a.deadDkpAchieved)
+    .slice(0, 10);
+
+  container.innerHTML = top.map((player, index) => `
+    <div class="ranking-row">
+      <span>#${index + 1}</span>
+      <span>
+        ${player.username || player.characterId}
+        <small style="display:block;color:var(--muted);margin-top:2px;">
+          T5: ${formatNumber(player.t5Deaths)} | T4: ${formatNumber(player.t4Deaths)}
+        </small>
+      </span>
+      <strong class="${metricClass(player.deadDkpAchieved)}">${formatPercent(player.deadDkpAchieved)}</strong>
+    </div>
+  `).join("");
+}
+
 function renderLowContributors() {
   const container = document.getElementById("lowContributors");
   const low = getActivePlayers()
     .filter(player => player.goalPercent < 0.7)
-    .sort((a, b) => a.goalPercent - b.goalPercent)
+    .sort((a, b) => b.dkpGoal - a.dkpGoal)
     .slice(0, 10);
 
   if (!low.length) {
-    container.innerHTML = "<p>No active players below 70%.</p>";
+    container.innerHTML = "<p>No active players below 70% Total DKP Goal.</p>";
     return;
   }
 
   container.innerHTML = low.map((player, index) => `
     <div class="ranking-row">
       <span>#${index + 1}</span>
-      <span>${player.username || player.characterId}</span>
+      <span>
+        ${player.username || player.characterId}
+        <small style="display:block;color:var(--muted);margin-top:2px;">
+          DKP Goal: ${formatNumber(player.dkpGoal)}
+        </small>
+      </span>
       <strong class="low">${formatPercent(player.goalPercent)}</strong>
     </div>
   `).join("");
@@ -326,9 +351,8 @@ function renderTable() {
 
   const tbody = document.querySelector("#statsTable tbody");
 
-  tbody.innerHTML = filtered.map((player, index) => `
+  tbody.innerHTML = filtered.map(player => `
     <tr>
-      <td>${index + 1}</td>
       <td>${player.characterId}</td>
       <td>${player.username}</td>
       <td>${formatNumber(player.power)}</td>

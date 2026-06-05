@@ -13,3 +13,16 @@ Upload these files to GitHub Pages:
 - config.js
 - script.js
 - README.md
+
+
+v3 changes:
+- Dashboard Top Dead Goal % now shows T5 and T4 deaths.
+- Dashboard Below 70% Goal now shows DKP Goal.
+- Dashboard Below 70% Goal is sorted by highest DKP Goal first and shows top 10.
+
+
+v4 changes:
+- Added third page/tab: Info.
+- Info page explains DKP calculation, progressive power requirement, dead requirement, rally/garrison bonuses, external activity, and reward principle.
+- Renamed labels to Total DKP Goal % and Dead DKP Goal %.
+- Dashboard active-player threshold now uses Power over 25M instead of Adjusted DKP over 25M.

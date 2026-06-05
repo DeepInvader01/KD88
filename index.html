@@ -14,6 +14,7 @@
     <nav>
       <button class="tab-button active" data-tab="dashboard">Dashboard</button>
       <button class="tab-button" data-tab="details">Detailed Stats</button>
+      <button class="tab-button" data-tab="info">Info</button>
     </nav>
   </header>
 
@@ -31,15 +32,15 @@
       <div class="cards">
         <div class="card"><span>Total Players over 25M</span><strong id="totalPlayers">0</strong></div>
         <div class="card"><span>Total Adjusted DKP</span><strong id="totalDkp">0</strong></div>
-        <div class="card"><span>Average Goal %</span><strong id="avgGoal">0%</strong></div>
-        <div class="card"><span>Below 70% Goal over 25M</span><strong id="belowGoal">0</strong></div>
+        <div class="card"><span>Average Total DKP Goal %</span><strong id="avgGoal">0%</strong></div>
+        <div class="card"><span>Below 70% Total Goal over 25M</span><strong id="belowGoal">0</strong></div>
       </div>
 
       <div class="dashboard-grid">
         <div class="panel"><h2>Top Adjusted DKP</h2><div id="topAdjustedDkp"></div></div>
-        <div class="panel"><h2>Top Goal %</h2><div id="topGoalPercent"></div></div>
-        <div class="panel"><h2>Top Dead Goal %</h2><div id="topDeadDkp"></div></div>
-        <div class="panel"><h2>Below 70% Goal</h2><div id="lowContributors"></div></div>
+        <div class="panel"><h2>Top Total DKP Goal %</h2><div id="topGoalPercent"></div></div>
+        <div class="panel"><h2>Top Dead DKP Goal %</h2><div id="topDeadDkp"></div></div>
+        <div class="panel"><h2>Below 70% Total DKP Goal</h2><div id="lowContributors"></div></div>
       </div>
     </section>
 
@@ -49,8 +50,8 @@
         <div class="quick-sort">
           <span>Quick sort:</span>
           <button class="sort-button details-sort active" data-sort="adjustedDkp">Adjusted DKP</button>
-          <button class="sort-button details-sort" data-sort="goalPercent">Goal %</button>
-          <button class="sort-button details-sort" data-sort="deadDkpAchieved">Dead DKP Achieved</button>
+          <button class="sort-button details-sort" data-sort="goalPercent">Total DKP Goal %</button>
+          <button class="sort-button details-sort" data-sort="deadDkpAchieved">Dead DKP Goal %</button>
           <button class="sort-button details-sort" data-sort="totalKp">Total KP</button>
           <button class="sort-button details-sort" data-sort="power">Power</button>
         </div>
@@ -67,8 +68,8 @@
               <th data-sort="dkp">DKP</th>
               <th data-sort="adjustedDkp">Adjusted DKP</th>
               <th data-sort="dkpGoal">DKP Goal</th>
-              <th data-sort="goalPercent">Goal %</th>
-              <th data-sort="deadDkpAchieved">Dead DKP Achieved</th>
+              <th data-sort="goalPercent">Total DKP Goal %</th>
+              <th data-sort="deadDkpAchieved">Dead DKP Goal %</th>
               <th data-sort="totalKp">Total KP</th>
               <th data-sort="t5Deaths">T5 Deaths</th>
               <th data-sort="t4Deaths">T4 Deaths</th>
@@ -79,6 +80,114 @@
         </table>
       </div>
     </section>
+
+    <section id="info" class="tab-content">
+      <div class="info-hero">
+        <h2>How DKP is calculated</h2>
+        <p>
+          This page explains how DKP is calculated in KD3688 and why the system is more detailed than a simple kill-point ranking.
+          The goal is a fair and transparent evaluation of wartime contribution, reward distribution, and Autarch distribution.
+        </p>
+      </div>
+
+      <div class="info-grid">
+        <article class="info-card">
+          <h3>1) Basic DKP Calculation</h3>
+          <p>DKP is based on kills and deads during wartime.</p>
+          <table class="info-table">
+            <thead>
+              <tr>
+                <th>Action</th>
+                <th>DKP Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>T4 Kills</td><td>1 point</td></tr>
+              <tr><td>T5 Kills</td><td>2 points</td></tr>
+              <tr><td>T4 Deads</td><td>7.5 points</td></tr>
+              <tr><td>T5 Deads</td><td>15 points</td></tr>
+            </tbody>
+          </table>
+          <p class="info-note">Total DKP is the sum of kill DKP and dead DKP.</p>
+        </article>
+
+        <article class="info-card">
+          <h3>2) Power-Based DKP Requirement</h3>
+          <p>
+            DKP requirements scale with starting power. The system is progressive, meaning each power bracket is calculated separately.
+            Higher-power players still benefit from the lower brackets, similar to a tax system.
+          </p>
+          <table class="info-table">
+            <thead>
+              <tr>
+                <th>Power Bracket</th>
+                <th>Multiplier</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>First 45M power</td><td>0.5×</td></tr>
+              <tr><td>45M to 70M power</td><td>0.75×</td></tr>
+              <tr><td>Above 70M power</td><td>1×</td></tr>
+            </tbody>
+          </table>
+          <p class="info-note">These values may be adjusted in future KvKs if needed.</p>
+        </article>
+
+        <article class="info-card">
+          <h3>3) Minimum Dead Requirement</h3>
+          <p>
+            At least <strong>20% of your DKP must come from deads</strong>.
+            If this requirement is not met, your DKP can be reduced accordingly.
+          </p>
+          <div class="formula-box">
+            <span>Dead DKP matters because it shows actual sacrifice, not only kill farming.</span>
+          </div>
+          <p>
+            Example: if your deads are too low, your total DKP is capped based on your dead contribution.
+            This helps prevent KP chasing and keeps the KvK burden fair.
+          </p>
+        </article>
+
+        <article class="info-card">
+          <h3>4) Rally and Garrison Leads</h3>
+          <p>
+            Rally and garrison leads often have fewer open-field opportunities because they need to focus key marches,
+            gear, and commander setups on kingdom objectives.
+          </p>
+          <ul>
+            <li>Rally leads can receive a DKP bonus.</li>
+            <li>Garrison leads can receive a higher DKP bonus.</li>
+          </ul>
+          <p>This recognizes responsibility while keeping their evaluation fair.</p>
+        </article>
+
+        <article class="info-card">
+          <h3>5) External Activity</h3>
+          <p>
+            If a player is outside the kingdom during non-war periods, leeches Golden Chests elsewhere, or is less active in KD3688,
+            their DKP requirement can be increased.
+          </p>
+          <p>
+            Being part of the kingdom means contributing to matchmaking and seed position. That comes with responsibility.
+          </p>
+        </article>
+
+        <article class="info-card principle-card">
+          <h3>6) Main Principle</h3>
+          <p class="principle">
+            Equal rewards require equal contribution.
+          </p>
+          <p>DKP reflects meaningful participation:</p>
+          <ul>
+            <li>Kills matter.</li>
+            <li>Deads matter.</li>
+            <li>Activity matters.</li>
+          </ul>
+          <p>The full DKP list is available in-game and on Discord.</p>
+        </article>
+      </div>
+    </section>
+
   </main>
 
   <script src="config.js"></script>
