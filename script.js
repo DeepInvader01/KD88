@@ -361,8 +361,9 @@ function renderTable() {
 
   const tbody = document.querySelector("#statsTable tbody");
 
-  tbody.innerHTML = filtered.map(player => `
+  tbody.innerHTML = filtered.map((player, index) => `
     <tr>
+      <td>${index + 1}</td>
       <td>${player.characterId}</td>
       <td>${player.username}</td>
       <td>${formatNumber(player.power)}</td>
