@@ -8,13 +8,13 @@
 </head>
 <body>
   <header class="site-header">
-    <div>
-      <h1>KD3688 KingdomStats</h1>
-    </div>
-    <nav>
-      <button class="tab-button active" data-tab="dashboard">Dashboard</button>
-      <button class="tab-button" data-tab="details">Detailed Stats</button>
-      <button class="tab-button" data-tab="info">Info</button>
+    <div class="hero-kicker">Kingdom 3688</div>
+    <h1>KD3688 KingdomStats</h1>
+    <p class="hero-subtitle">KvK contribution analytics, DKP tracking, and reward transparency</p>
+    <nav class="main-nav">
+      <button class="tab-button active nav-dashboard" data-tab="dashboard">Dashboard</button>
+      <button class="tab-button nav-details" data-tab="details">Detailed Stats</button>
+      <button class="tab-button nav-info" data-tab="info">Info</button>
     </nav>
   </header>
 
@@ -49,11 +49,11 @@
         <input id="searchInput" type="text" placeholder="Search by username or Character ID..." />
         <div class="quick-sort">
           <span>Quick sort:</span>
-          <button class="sort-button details-sort active" data-sort="adjustedDkp">Adjusted DKP</button>
-          <button class="sort-button details-sort" data-sort="goalPercent">Total DKP Goal %</button>
-          <button class="sort-button details-sort" data-sort="deadDkpAchieved">Dead DKP Goal %</button>
-          <button class="sort-button details-sort" data-sort="totalKp">Total KP</button>
-          <button class="sort-button details-sort" data-sort="power">Power</button>
+          <button class="sort-button details-sort active sort-adjusted" data-sort="adjustedDkp">Adjusted DKP</button>
+          <button class="sort-button details-sort sort-goal" data-sort="goalPercent">Total DKP Goal %</button>
+          <button class="sort-button details-sort sort-dead" data-sort="deadDkpAchieved">Dead DKP Goal %</button>
+          <button class="sort-button details-sort sort-kp" data-sort="totalKp">Total KP</button>
+          <button class="sort-button details-sort sort-power" data-sort="power">Power</button>
         </div>
       </div>
 
