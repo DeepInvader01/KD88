@@ -85,28 +85,47 @@ function findHeaderIndex(headers, aliases) {
 
 function parseNumber(value) {
   if (value === null || value === undefined) return 0;
-  let text = String(value).trim();
 
+  let text = String(value).trim();
   if (!text || text === "-" || text.toLowerCase() === "n/a") return 0;
 
   const hadPercent = text.includes("%");
-  text = text.replace(/%/g, "").replace(/\s/g, "");
 
-  // Handles German-style formatted numbers like 1.234.567,89
-  if (text.includes(",") && text.includes(".")) {
+  text = text
+    .replace(/%/g, "")
+    .replace(/\s/g, "")
+    .replace(/'/g, "");
+
+  const commaCount = (text.match(/,/g) || []).length;
+  const dotCount = (text.match(/\./g) || []).length;
+
+  // German format: 1.234.567,89
+  if (commaCount === 1 && dotCount >= 1) {
     text = text.replace(/\./g, "").replace(",", ".");
-  } else if (text.includes(",") && !text.includes(".")) {
+  }
+  // German decimal: 85,5
+  else if (commaCount === 1 && dotCount === 0) {
     text = text.replace(",", ".");
-  } else {
+  }
+  // German thousands only: 1.234.567 or 4.400.000.000
+  else if (commaCount === 0 && dotCount >= 1) {
+    const parts = text.split(".");
+    const allThousands = parts.length > 1 && parts.slice(1).every(part => part.length === 3);
+    if (allThousands) {
+      text = parts.join("");
+    }
+  }
+  // English thousands: 1,234,567
+  else if (commaCount > 1 && dotCount === 0) {
     text = text.replace(/,/g, "");
   }
 
-  const number = Number(text.replace(/[^\d.-]/g, ""));
-  if (!Number.isFinite(number)) return 0;
+  const cleaned = text.replace(/[^\d.-]/g, "");
+  const number = Number(cleaned);
 
+  if (!Number.isFinite(number)) return 0;
   if (hadPercent) return number / 100;
 
-  // If percent-like columns are stored as 85 instead of 0.85, convert later in normalizePercent.
   return number;
 }
 
@@ -140,7 +159,7 @@ function rowsToPlayers(rows) {
         highestPower: parseNumber(getValue(row, headers, "highestPower")),
         dkp: parseNumber(getValue(row, headers, "dkp")),
         adjustedDkp,
-        reduction: parseNumber(getValue(row, headers, "reduction")),
+        reduction: normalizePercent(getValue(row, headers, "reduction")),
         dkpGoal,
         goalPercent: goalPercentRaw !== "" ? normalizePercent(goalPercentRaw) : (dkpGoal > 0 ? adjustedDkp / dkpGoal : 0),
         deadDkpAchieved: normalizePercent(getValue(row, headers, "deadDkpAchieved")),
@@ -162,9 +181,7 @@ async function loadDataset() {
     status.textContent = `Loading ${selected.label}...`;
 
     const response = await fetch(getCsvUrl(selected.sheetName));
-    if (!response.ok) {
-      throw new Error(`Google Sheets returned ${response.status}`);
-    }
+    if (!response.ok) throw new Error(`Google Sheets returned ${response.status}`);
 
     const csvText = await response.text();
 
@@ -194,6 +211,7 @@ const formatNumber = value => {
   if (value === null || value === undefined || value === "") return "";
   const number = Number(value);
   if (!Number.isFinite(number)) return "";
+  if (number >= 1000000000000) return (number / 1000000000000).toFixed(2) + "T";
   if (number >= 1000000000) return (number / 1000000000).toFixed(2) + "B";
   if (number >= 1000000) return (number / 1000000).toFixed(2) + "M";
   if (number >= 1000) return (number / 1000).toFixed(1) + "K";
@@ -206,6 +224,11 @@ function metricClass(value) {
   if (value < 0.7) return "low";
   if (value < 1) return "warn";
   return "good";
+}
+
+function getActivePlayers() {
+  const threshold = CONFIG.activePlayerThreshold ?? 25000000;
+  return players.filter(p => Number(p.adjustedDkp || 0) >= threshold);
 }
 
 function setupTabs() {
@@ -227,10 +250,13 @@ function setupDatasetSelector() {
 }
 
 function renderDashboard() {
-  const totalPlayers = players.length;
+  const activePlayers = getActivePlayers();
+  const totalPlayers = activePlayers.length;
   const totalDkp = players.reduce((sum, p) => sum + Number(p.adjustedDkp || 0), 0);
-  const avgGoal = totalPlayers ? players.reduce((sum, p) => sum + Number(p.goalPercent || 0), 0) / totalPlayers : 0;
-  const belowGoal = players.filter(p => p.goalPercent < 0.7).length;
+  const avgGoal = activePlayers.length
+    ? activePlayers.reduce((sum, p) => sum + Number(p.goalPercent || 0), 0) / activePlayers.length
+    : 0;
+  const belowGoal = activePlayers.filter(p => p.goalPercent < 0.7).length;
 
   document.getElementById("totalPlayers").textContent = totalPlayers;
   document.getElementById("totalDkp").textContent = formatNumber(totalDkp);
@@ -258,13 +284,13 @@ function renderTopList(elementId, key, formatter, percentStyle = false) {
 
 function renderLowContributors() {
   const container = document.getElementById("lowContributors");
-  const low = [...players]
+  const low = getActivePlayers()
     .filter(player => player.goalPercent < 0.7)
     .sort((a, b) => a.goalPercent - b.goalPercent)
     .slice(0, 10);
 
   if (!low.length) {
-    container.innerHTML = "<p>No players below 70%.</p>";
+    container.innerHTML = "<p>No active players below 70%.</p>";
     return;
   }
 
@@ -293,7 +319,9 @@ function renderTable() {
       return sortDirection === "asc" ? av.localeCompare(bv) : bv.localeCompare(av);
     }
 
-    return sortDirection === "asc" ? Number(av || 0) - Number(bv || 0) : Number(bv || 0) - Number(av || 0);
+    return sortDirection === "asc"
+      ? Number(av || 0) - Number(bv || 0)
+      : Number(bv || 0) - Number(av || 0);
   });
 
   const tbody = document.querySelector("#statsTable tbody");
@@ -327,11 +355,11 @@ function setupTable() {
     });
   });
 
-  document.querySelectorAll(".sort-button").forEach(button => {
+  document.querySelectorAll(".details-sort").forEach(button => {
     button.addEventListener("click", () => {
       setSort(button.dataset.sort);
-      document.querySelectorAll(".sort-button").forEach(b => b.classList.remove("active"));
-      document.querySelectorAll(`[data-sort="${button.dataset.sort}"]`).forEach(b => b.classList.add("active"));
+      document.querySelectorAll(".details-sort").forEach(b => b.classList.remove("active"));
+      button.classList.add("active");
     });
   });
 }

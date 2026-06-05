@@ -1,17 +1,11 @@
-// KD3688 KingdomStats configuration
-
 const CONFIG = {
   spreadsheetId: "11zMZAPm2tSrEebS4tdhYsG-eXEhre9LzokYL78V5yO4",
 
-  // Add more tabs later, for example:
-  // { label: "KvK6 Zone5", sheetName: "KvK6_Zone5" },
-  // { label: "KvK6 Pass7 + KL", sheetName: "KvK6_Pass7_KL" },
+  // Dashboard cards "Total Players over 25M" and "Below 70% Goal over 25M"
+  // ignore players below this Adjusted DKP value.
+  activePlayerThreshold: 25000000,
+
   datasets: [
     { label: "KvK6 Total", sheetName: "KvK6_Total" }
-  ],
-
-  // This site expects the Google Sheet tab to have headers in row 1.
-  // Your important headers:
-  // Character ID, Username, Power, Highest Power, DKP, Adjusted DKP,
-  // DKP Goal, Normal DKP Goal, Dead DKP Achieved, Total KP, T5 Deaths, T4 Deaths
+  ]
 };
