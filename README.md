@@ -64,3 +64,12 @@ v10 changes:
 - Restored dynamic Rank column in Detailed Stats.
 - Rank always displays 1, 2, 3, ... based on the current sort/filter.
 - Fixed Dead DKP Goal % parsing by reading it as a raw number multiplier.
+
+
+v11 changes:
+- Added language selector: EN, DE, FR, TR, VI.
+- Translates Dashboard, Detailed Stats headers, Info page and footer.
+- Saves selected language in localStorage.
+- Includes the percentage parsing fixes:
+  - Total DKP Goal % uses parseNumber(...)
+  - Dead DKP Goal % uses parseNumber(...)

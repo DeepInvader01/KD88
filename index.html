@@ -9,52 +9,59 @@
 </head>
 <body>
   <header class="site-header">
-    <div class="hero-kicker">Kingdom 3688</div>
+    <div class="hero-kicker" data-i18n="heroKicker">Kingdom 3688</div>
     <h1>KD3688 KingdomStats</h1>
-    <p class="hero-subtitle">KvK contribution analytics, DKP tracking, and reward transparency</p>
+    <p class="hero-subtitle" data-i18n="heroSubtitle">KvK contribution analytics, DKP tracking, and reward transparency</p>
     <nav class="main-nav">
-      <button class="tab-button active nav-dashboard" data-tab="dashboard">Dashboard</button>
-      <button class="tab-button nav-details" data-tab="details">Detailed Stats</button>
-      <button class="tab-button nav-info" data-tab="info">Info</button>
+      <button class="tab-button active nav-dashboard" data-tab="dashboard" data-i18n="navDashboard">Dashboard</button>
+      <button class="tab-button nav-details" data-tab="details" data-i18n="navDetails">Detailed Stats</button>
+      <button class="tab-button nav-info" data-tab="info" data-i18n="navInfo">Info</button>
     </nav>
+    <div class="language-switcher" aria-label="Language selector">
+      <button class="lang-button active" data-lang="en">EN</button>
+      <button class="lang-button" data-lang="de">DE</button>
+      <button class="lang-button" data-lang="fr">FR</button>
+      <button class="lang-button" data-lang="tr">TR</button>
+      <button class="lang-button" data-lang="vi">VI</button>
+    </div>
   </header>
 
   <main>
     <section class="controls">
       <div class="control-group">
-        <label for="datasetSelect">Dataset</label>
+        <label for="datasetSelect" data-i18n="dataset">Dataset</label>
         <select id="datasetSelect"></select>
       </div>
-      <button id="reloadButton">Reload Data</button>
+      <button id="reloadButton" data-i18n="reloadData">Reload Data</button>
       <span id="loadStatus">Loading...</span>
     </section>
 
     <section id="dashboard" class="tab-content active">
       <div class="cards">
-        <div class="card"><span>Total Players over 25M</span><strong id="totalPlayers">0</strong></div>
-        <div class="card"><span>Total Adjusted DKP</span><strong id="totalDkp">0</strong></div>
-        <div class="card"><span>Average Total DKP Goal %</span><strong id="avgGoal">0%</strong></div>
-        <div class="card"><span>Below 70% Total Goal over 25M</span><strong id="belowGoal">0</strong></div>
+        <div class="card"><span data-i18n="totalPlayersOver25">Total Players over 25M</span><strong id="totalPlayers">0</strong></div>
+        <div class="card"><span data-i18n="totalAdjustedDkp">Total Adjusted DKP</span><strong id="totalDkp">0</strong></div>
+        <div class="card"><span data-i18n="averageTotalGoal">Average Total DKP Goal %</span><strong id="avgGoal">0%</strong></div>
+        <div class="card"><span data-i18n="below70Over25">Below 70% Total Goal over 25M</span><strong id="belowGoal">0</strong></div>
       </div>
 
       <div class="dashboard-grid">
-        <div class="panel"><h2>Top Adjusted DKP</h2><div id="topAdjustedDkp"></div></div>
-        <div class="panel"><h2>Top Total DKP Goal %</h2><div id="topGoalPercent"></div></div>
-        <div class="panel"><h2>Top Dead Goal %</h2><div id="topDeadDkp"></div></div>
-        <div class="panel"><h2>Below 70% Total DKP Goal</h2><div id="lowContributors"></div></div>
+        <div class="panel"><h2 data-i18n="topAdjustedDkp">Top Adjusted DKP</h2><div id="topAdjustedDkp"></div></div>
+        <div class="panel"><h2 data-i18n="topTotalGoal">Top Total DKP Goal %</h2><div id="topGoalPercent"></div></div>
+        <div class="panel"><h2 data-i18n="topDeadGoal">Top Dead DKP Goal %</h2><div id="topDeadDkp"></div></div>
+        <div class="panel"><h2 data-i18n="below70TotalGoal">Below 70% Total DKP Goal</h2><div id="lowContributors"></div></div>
       </div>
     </section>
 
     <section id="details" class="tab-content">
       <div class="table-tools">
-        <input id="searchInput" type="text" placeholder="Search by username or Character ID..." />
+        <input id="searchInput" type="text" placeholder="Search by username or Character ID..." data-i18n-placeholder="searchPlaceholder" />
         <div class="quick-sort">
-          <span>Quick sort:</span>
-          <button class="sort-button details-sort active sort-adjusted" data-sort="adjustedDkp">Adjusted DKP</button>
-          <button class="sort-button details-sort sort-goal" data-sort="goalPercent">Total DKP Goal %</button>
-          <button class="sort-button details-sort sort-dead" data-sort="deadDkpAchieved">Dead DKP Goal %</button>
-          <button class="sort-button details-sort sort-kp" data-sort="totalKp">Total KP</button>
-          <button class="sort-button details-sort sort-power" data-sort="power">Power</button>
+          <span data-i18n="quickSort">Quick sort:</span>
+          <button class="sort-button details-sort active sort-adjusted" data-sort="adjustedDkp" data-i18n="adjustedDkp">Adjusted DKP</button>
+          <button class="sort-button details-sort sort-goal" data-sort="goalPercent" data-i18n="totalDkpGoalPercent">Total DKP Goal %</button>
+          <button class="sort-button details-sort sort-dead" data-sort="deadDkpAchieved" data-i18n="deadDkpGoalPercent">Dead DKP Goal %</button>
+          <button class="sort-button details-sort sort-kp" data-sort="totalKp" data-i18n="totalKp">Total KP</button>
+          <button class="sort-button details-sort sort-power" data-sort="power" data-i18n="power">Power</button>
         </div>
       </div>
 
@@ -62,20 +69,20 @@
         <table id="statsTable" class="details-table">
           <thead>
             <tr>
-              <th>Rank</th>
-              <th data-sort="characterId">Character ID</th>
-              <th data-sort="username">Username</th>
-              <th data-sort="power">Power</th>
-              <th data-sort="highestPower">Highest Power</th>
-              <th data-sort="dkp">DKP</th>
-              <th data-sort="adjustedDkp">Adjusted DKP</th>
-              <th data-sort="dkpGoal">DKP Goal</th>
-              <th data-sort="goalPercent">Total DKP Goal %</th>
-              <th data-sort="deadDkpAchieved">Dead DKP Goal %</th>
-              <th data-sort="totalKp">Total KP</th>
-              <th data-sort="t5Deaths">T5 Deaths</th>
-              <th data-sort="t4Deaths">T4 Deaths</th>
-              <th data-sort="reduction">Reduction</th>
+              <th data-i18n="rank">Rank</th>
+              <th data-sort="characterId" data-i18n="characterId">Character ID</th>
+              <th data-sort="username" data-i18n="username">Username</th>
+              <th data-sort="power" data-i18n="power">Power</th>
+              <th data-sort="highestPower" data-i18n="highestPower">Highest Power</th>
+              <th data-sort="dkp" data-i18n="dkp">DKP</th>
+              <th data-sort="adjustedDkp" data-i18n="adjustedDkp">Adjusted DKP</th>
+              <th data-sort="dkpGoal" data-i18n="dkpGoal">DKP Goal</th>
+              <th data-sort="goalPercent" data-i18n="totalDkpGoalPercent">Total DKP Goal %</th>
+              <th data-sort="deadDkpAchieved" data-i18n="deadDkpGoalPercent">Dead DKP Goal %</th>
+              <th data-sort="totalKp" data-i18n="totalKp">Total KP</th>
+              <th data-sort="t5Deaths" data-i18n="t5Deaths">T5 Deaths</th>
+              <th data-sort="t4Deaths" data-i18n="t4Deaths">T4 Deaths</th>
+              <th data-sort="reduction" data-i18n="reduction">Reduction</th>
             </tr>
           </thead>
           <tbody></tbody>
@@ -85,8 +92,8 @@
 
     <section id="info" class="tab-content">
       <div class="info-hero">
-        <h2>How DKP is calculated</h2>
-        <p>
+        <h2 data-i18n="infoTitle">How DKP is calculated</h2>
+        <p data-i18n="infoIntro">
           This page explains how DKP is calculated in KD3688 and why the system is more detailed than a simple kill-point ranking.
           The goal is a fair and transparent evaluation of wartime contribution, reward distribution, and Autarch distribution.
         </p>
@@ -94,98 +101,98 @@
 
       <div class="info-grid">
         <article class="info-card">
-          <h3>1) Basic DKP Calculation</h3>
-          <p>DKP is based on kills and deads during wartime.</p>
+          <h3 data-i18n="info1Title">1) Basic DKP Calculation</h3>
+          <p data-i18n="info1Text">DKP is based on kills and deads during wartime.</p>
           <table class="info-table">
             <thead>
               <tr>
-                <th>Action</th>
-                <th>DKP Value</th>
+                <th data-i18n="action">Action</th>
+                <th data-i18n="dkpValue">DKP Value</th>
               </tr>
             </thead>
             <tbody>
-              <tr><td>T4 Kills</td><td>1 point</td></tr>
-              <tr><td>T5 Kills</td><td>2 points</td></tr>
-              <tr><td>T4 Deads</td><td>7.5 points</td></tr>
-              <tr><td>T5 Deads</td><td>15 points</td></tr>
+              <tr><td data-i18n="t4Kills">T4 Kills</td><td data-i18n="onePoint">1 point</td></tr>
+              <tr><td data-i18n="t5Kills">T5 Kills</td><td data-i18n="twoPoints">2 points</td></tr>
+              <tr><td data-i18n="t4Deads">T4 Deads</td><td data-i18n="sevenHalfPoints">7.5 points</td></tr>
+              <tr><td data-i18n="t5Deads">T5 Deads</td><td data-i18n="fifteenPoints">15 points</td></tr>
             </tbody>
           </table>
-          <p class="info-note">Total DKP is the sum of kill DKP and dead DKP.</p>
+          <p class="info-note" data-i18n="info1Note">Total DKP is the sum of kill DKP and dead DKP.</p>
         </article>
 
         <article class="info-card">
-          <h3>2) Power-Based DKP Requirement</h3>
-          <p>
+          <h3 data-i18n="info2Title">2) Power-Based DKP Requirement</h3>
+          <p data-i18n="info2Text">
             DKP requirements scale with starting power. The system is progressive, meaning each power bracket is calculated separately.
             Higher-power players still benefit from the lower brackets, similar to a tax system.
           </p>
           <table class="info-table">
             <thead>
               <tr>
-                <th>Power Bracket</th>
-                <th>Multiplier</th>
+                <th data-i18n="powerBracket">Power Bracket</th>
+                <th data-i18n="multiplier">Multiplier</th>
               </tr>
             </thead>
             <tbody>
-              <tr><td>First 45M power</td><td>0.5×</td></tr>
-              <tr><td>45M to 70M power</td><td>0.75×</td></tr>
-              <tr><td>Above 70M power</td><td>1×</td></tr>
+              <tr><td data-i18n="first45">First 45M power</td><td>0.5×</td></tr>
+              <tr><td data-i18n="from45to70">45M to 70M power</td><td>0.75×</td></tr>
+              <tr><td data-i18n="above70">Above 70M power</td><td>1×</td></tr>
             </tbody>
           </table>
-          <p class="info-note">These values may be adjusted in future KvKs if needed.</p>
+          <p class="info-note" data-i18n="info2Note">These values may be adjusted in future KvKs if needed.</p>
         </article>
 
         <article class="info-card">
-          <h3>3) Minimum Dead Requirement</h3>
-          <p>
+          <h3 data-i18n="info3Title">3) Minimum Dead Requirement</h3>
+          <p data-i18n-html="info3Text">
             At least <strong>20% of your DKP must come from deads</strong>.
             If this requirement is not met, your DKP can be reduced accordingly.
           </p>
           <div class="formula-box">
-            <span>Dead DKP matters because it shows actual sacrifice, not only kill farming.</span>
+            <span data-i18n="info3Box">Dead DKP matters because it shows actual sacrifice, not only kill farming.</span>
           </div>
-          <p>
+          <p data-i18n="info3Example">
             Example: if your deads are too low, your total DKP is capped based on your dead contribution.
             This helps prevent KP chasing and keeps the KvK burden fair.
           </p>
         </article>
 
         <article class="info-card">
-          <h3>4) Rally and Garrison Leads</h3>
-          <p>
+          <h3 data-i18n="info4Title">4) Rally and Garrison Leads</h3>
+          <p data-i18n="info4Text">
             Rally and garrison leads often have fewer open-field opportunities because they need to focus key marches,
             gear, and commander setups on kingdom objectives.
           </p>
           <ul>
-            <li>Rally leads can receive a DKP bonus.</li>
-            <li>Garrison leads can receive a higher DKP bonus.</li>
+            <li data-i18n="info4Bullet1">Rally leads can receive a DKP bonus.</li>
+            <li data-i18n="info4Bullet2">Garrison leads can receive a higher DKP bonus.</li>
           </ul>
-          <p>This recognizes responsibility while keeping their evaluation fair.</p>
+          <p data-i18n="info4End">This recognizes responsibility while keeping their evaluation fair.</p>
         </article>
 
         <article class="info-card">
-          <h3>5) External Activity</h3>
-          <p>
+          <h3 data-i18n="info5Title">5) External Activity</h3>
+          <p data-i18n="info5Text">
             If a player is outside the kingdom during non-war periods, leeches Golden Chests elsewhere, or is less active in KD3688,
             their DKP requirement can be increased.
           </p>
-          <p>
+          <p data-i18n="info5End">
             Being part of the kingdom means contributing to matchmaking and seed position. That comes with responsibility.
           </p>
         </article>
 
         <article class="info-card principle-card">
-          <h3>6) Main Principle</h3>
-          <p class="principle">
+          <h3 data-i18n="info6Title">6) Main Principle</h3>
+          <p class="principle" data-i18n="principle">
             Equal rewards require equal contribution.
           </p>
-          <p>DKP reflects meaningful participation:</p>
+          <p data-i18n="info6Text">DKP reflects meaningful participation:</p>
           <ul>
-            <li>Kills matter.</li>
-            <li>Deads matter.</li>
-            <li>Activity matters.</li>
+            <li data-i18n="killsMatter">Kills matter.</li>
+            <li data-i18n="deadsMatter">Deads matter.</li>
+            <li data-i18n="activityMatter">Activity matters.</li>
           </ul>
-          <p>The full DKP list is available in-game and on Discord.</p>
+          <p data-i18n="info6End">The full DKP list is available in-game and on Discord.</p>
         </article>
       </div>
     </section>
@@ -199,9 +206,9 @@
   <div class="footer-content">
     <img src="Strom.png" alt="StromTrooper">
     <div>
-      <strong>Data Disclaimer</strong><br>
-      All data, calculations, analysis and presentation on this website are provided and maintained by
-      <strong>StromTrooper</strong> (R6 of KD3688). This is an unofficial community project and is not affiliated with Lilith Games or Rise of Kingdoms.
+      <strong data-i18n="dataDisclaimer">Data Disclaimer</strong><br>
+      <span data-i18n="footerText">All data, calculations, analysis and presentation on this website are provided and maintained by</span>
+      <strong>StromTrooper</strong> (R6 of KD3688). <span data-i18n="footerUnofficial">This is an unofficial community project and is not affiliated with Lilith Games or Rise of Kingdoms.</span>
     </div>
   </div>
 </footer>
