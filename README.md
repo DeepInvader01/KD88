@@ -78,3 +78,9 @@ v11 changes:
 v12 changes:
 - Fixed JavaScript syntax error that prevented Google Sheet loading.
 - Dataset selector setup order improved.
+
+
+v13 changes:
+- Added Polish language.
+- Replaced short language codes with full language names.
+- Added clear "Language selection" label above the language buttons.
