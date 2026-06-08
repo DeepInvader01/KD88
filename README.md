@@ -73,3 +73,8 @@ v11 changes:
 - Includes the percentage parsing fixes:
   - Total DKP Goal % uses parseNumber(...)
   - Dead DKP Goal % uses parseNumber(...)
+
+
+v12 changes:
+- Fixed JavaScript syntax error that prevented Google Sheet loading.
+- Dataset selector setup order improved.

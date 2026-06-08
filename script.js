@@ -783,7 +783,7 @@ function renderLowContributors() {
     .slice(0, 10);
 
   if (!low.length) {
-    container.innerHTML = "<p>${t("noActiveBelow70")}</p>";
+    container.innerHTML = `<p>${t("noActiveBelow70")}</p>`;
     return;
   }
 
@@ -875,7 +875,7 @@ function setSort(key) {
 }
 
 setupTabs();
-setupLanguageSelector();
 setupDatasetSelector();
 setupTable();
+setupLanguageSelector();
 loadDataset();
