@@ -84,3 +84,7 @@ v13 changes:
 - Added Polish language.
 - Replaced short language codes with full language names.
 - Added clear "Language selection" label above the language buttons.
+
+
+v14 changes:
+- Fixed missing French, Turkish, and Vietnamese translations for section 4: Rally and Garrison Leads.
