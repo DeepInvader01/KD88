@@ -6,6 +6,7 @@ const CONFIG = {
   activePlayerThreshold: 25000000,
 
   datasets: [
-    { label: "KvK6 Total", sheetName: "KvK6_Total" }
+    { label: "KvK6 • Total", sheetName: "KvK6_Total" },
+    { label: "KvK7 • Start", sheetName: "KvK7_Start" }
   ]
 };
