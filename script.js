@@ -21,6 +21,7 @@ const headerMap = {
   powerLossPercent: ["% Power Loss"],
   t5Deaths: ["T5 Deaths"],
   t4Deaths: ["T4 Deaths"],
+  deadGoalT5Equiv: ["Dead Goal T5 Equiv", "Dead Goal (T5)", "T5 Equiv"],
   totalKp: ["Total Kill Points", "Total KP"],
   t5Kills: ["T5 Kills"],
   t4Kills: ["T4 Kills"]
@@ -166,6 +167,7 @@ function rowsToPlayers(rows) {
         totalKp: parseNumber(getValue(row, headers, "totalKp")),
         t5Deaths: parseNumber(getValue(row, headers, "t5Deaths")),
         t4Deaths: parseNumber(getValue(row, headers, "t4Deaths")),
+        deadGoalT5Equiv: parseNumber(getValue(row, headers, "deadGoalT5Equiv")),
         raw: row
       };
     })
@@ -274,6 +276,7 @@ const TRANSLATIONS = {
     "totalKp": "Total KP",
     "t5Deaths": "T5 Deaths",
     "t4Deaths": "T4 Deaths",
+    "deadGoalT5Equiv": "Dead Goal (T5)",
     "reduction": "Reduction",
     "noActiveBelow70": "No active players below 70% Total DKP Goal.",
     "dkpGoalLabel": "DKP Goal",
@@ -358,6 +361,7 @@ const TRANSLATIONS = {
     "totalKp": "Gesamt-KP",
     "t5Deaths": "T5 Tote",
     "t4Deaths": "T4 Tote",
+    "deadGoalT5Equiv": "Dead-Ziel (T5)",
     "reduction": "Reduktion",
     "noActiveBelow70": "Keine aktiven Spieler unter 70% Gesamt-DKP-Ziel.",
     "dkpGoalLabel": "DKP-Ziel",
@@ -442,6 +446,7 @@ const TRANSLATIONS = {
     "totalKp": "KP total",
     "t5Deaths": "Morts T5",
     "t4Deaths": "Morts T4",
+    "deadGoalT5Equiv": "Objectif morts (T5)",
     "reduction": "Réduction",
     "noActiveBelow70": "Aucun joueur actif sous 70% de l’objectif DKP total.",
     "dkpGoalLabel": "Objectif DKP",
@@ -526,6 +531,7 @@ const TRANSLATIONS = {
     "totalKp": "Toplam KP",
     "t5Deaths": "T5 Ölü",
     "t4Deaths": "T4 Ölü",
+    "deadGoalT5Equiv": "Ölü hedefi (T5)",
     "reduction": "Azaltma",
     "noActiveBelow70": "%70 Toplam DKP Hedefi altında aktif oyuncu yok.",
     "dkpGoalLabel": "DKP hedefi",
@@ -610,6 +616,7 @@ const TRANSLATIONS = {
     "totalKp": "Tổng KP",
     "t5Deaths": "T5 chết",
     "t4Deaths": "T4 chết",
+    "deadGoalT5Equiv": "Mục tiêu quân chết (T5)",
     "reduction": "Giảm",
     "noActiveBelow70": "Không có người chơi hoạt động dưới 70% mục tiêu DKP tổng.",
     "dkpGoalLabel": "Mục tiêu DKP",
@@ -694,6 +701,7 @@ const TRANSLATIONS = {
     "totalKp": "Łączne KP",
     "t5Deaths": "Śmierci T5",
     "t4Deaths": "Śmierci T4",
+    "deadGoalT5Equiv": "Cel deadów (T5)",
     "reduction": "Redukcja",
     "noActiveBelow70": "Brak aktywnych graczy poniżej 70% całkowitego celu DKP.",
     "dkpGoalLabel": "Cel DKP",
@@ -890,6 +898,39 @@ function renderLowContributors() {
   `).join("");
 }
 
+
+function syncDetailsTableHeaders() {
+  const headerRow = document.querySelector("#statsTable thead tr");
+  if (!headerRow) return;
+
+  headerRow.innerHTML = `
+    <th data-i18n="rank">Rank</th>
+    <th data-sort="characterId" data-i18n="characterId">Character ID</th>
+    <th data-sort="username" data-i18n="username">Username</th>
+    <th data-sort="power" data-i18n="power">Power</th>
+    <th data-sort="dkp" data-i18n="dkp">DKP</th>
+    <th data-sort="adjustedDkp" data-i18n="adjustedDkp">Adjusted DKP</th>
+    <th data-sort="dkpGoal" data-i18n="dkpGoal">DKP Goal</th>
+    <th data-sort="goalPercent" data-i18n="totalDkpGoalPercent">Total DKP Goal %</th>
+    <th data-sort="deadDkpAchieved" data-i18n="deadDkpGoalPercent">Dead DKP Goal %</th>
+    <th data-sort="totalKp" data-i18n="totalKp">Total KP</th>
+    <th data-sort="t5Deaths" data-i18n="t5Deaths">T5 Deaths</th>
+    <th data-sort="t4Deaths" data-i18n="t4Deaths">T4 Deaths</th>
+    <th data-sort="deadGoalT5Equiv" data-i18n="deadGoalT5Equiv">Dead Goal (T5)</th>
+    <th data-sort="reduction" data-i18n="reduction">Reduction</th>
+  `;
+
+  document.querySelectorAll("#statsTable th").forEach(header => {
+    header.addEventListener("click", () => {
+      const key = header.dataset.sort;
+      if (key) setSort(key);
+    });
+  });
+
+  applyLanguage(currentLanguage);
+}
+
+
 function renderTable() {
   const query = document.getElementById("searchInput").value.toLowerCase().trim();
 
@@ -919,7 +960,6 @@ function renderTable() {
       <td>${player.characterId}</td>
       <td>${player.username}</td>
       <td>${formatNumber(player.power)}</td>
-      <td>${formatNumber(player.highestPower)}</td>
       <td>${formatNumber(player.dkp)}</td>
       <td>${formatNumber(player.adjustedDkp)}</td>
       <td>${formatNumber(player.dkpGoal)}</td>
@@ -928,6 +968,7 @@ function renderTable() {
       <td>${formatNumber(player.totalKp)}</td>
       <td>${formatNumber(player.t5Deaths)}</td>
       <td>${formatNumber(player.t4Deaths)}</td>
+      <td>${formatNumber(player.deadGoalT5Equiv)}</td>
       <td class="${reductionClass(player.reduction)}">${formatPercent(player.reduction)}</td>
     </tr>
   `).join("");
@@ -936,12 +977,7 @@ function renderTable() {
 function setupTable() {
   document.getElementById("searchInput").addEventListener("input", renderTable);
 
-  document.querySelectorAll("#statsTable th").forEach(header => {
-    header.addEventListener("click", () => {
-      const key = header.dataset.sort;
-      setSort(key);
-    });
-  });
+  syncDetailsTableHeaders();
 
   document.querySelectorAll(".details-sort").forEach(button => {
     button.addEventListener("click", () => {
@@ -953,6 +989,8 @@ function setupTable() {
 }
 
 function setSort(key) {
+  if (!key) return;
+
   if (sortKey === key) {
     sortDirection = sortDirection === "asc" ? "desc" : "asc";
   } else {
