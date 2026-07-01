@@ -21,7 +21,7 @@ const headerMap = {
   powerLossPercent: ["% Power Loss"],
   t5Deaths: ["T5 Deaths"],
   t4Deaths: ["T4 Deaths"],
-  totalKp: ["Total KP"],
+  totalKp: ["Total Kill Points", "Total KP"],
   t5Kills: ["T5 Kills"],
   t4Kills: ["T4 Kills"]
 };
