@@ -25,6 +25,7 @@ const headerMap = {
   totalKp: ["Total Kill Points", "Total KP"],
   t5Kills: ["T5 Kills"],
   t4Kills: ["T4 Kills"],
+  deadDkpFromFiller: ["Dead DKP from Filler"],
   zeroed: ["Zeroed"]
 };
 
@@ -169,6 +170,7 @@ function rowsToPlayers(rows) {
         t5Deaths: parseNumber(getValue(row, headers, "t5Deaths")),
         t4Deaths: parseNumber(getValue(row, headers, "t4Deaths")),
         deadGoalT5Equiv: parseNumber(getValue(row, headers, "deadGoalT5Equiv")),
+        deadDkpFromFiller: parseNumber(getValue(row, headers, "deadDkpFromFiller")),
         zeroed: String(getValue(row, headers, "zeroed")).trim(),
         raw: row
       };
@@ -294,6 +296,7 @@ const TRANSLATIONS = {
     "t5Deads": "T5 Deads",
     "onePoint": "1 point",
     "twoPoints": "2 points",
+    "deadDkpFromFiller": "Dead DKP from Filler",
     "sevenHalfPoints": "7.5 points",
     "fifteenPoints": "15 points",
     "info1Note": "Total DKP is the sum of kill DKP and dead DKP.",
@@ -338,6 +341,7 @@ const TRANSLATIONS = {
     "dataset": "Datensatz",
     "reloadData": "Daten neu laden",
     "loading": "Lädt...",
+    "deadDkpFromFiller": "Dead-DKP durch Filler",
     "loaded": "{count} Spieler aus {dataset} geladen",
     "couldNotLoad": "Google Sheet konnte nicht geladen werden",
     "searchPlaceholder": "Nach Username oder Character ID suchen...",
@@ -423,6 +427,7 @@ const TRANSLATIONS = {
     "dataset": "Données",
     "reloadData": "Recharger",
     "loading": "Chargement...",
+    "deadDkpFromFiller": "DKP de morts des fillers",
     "loaded": "{count} joueurs chargés depuis {dataset}",
     "couldNotLoad": "Impossible de charger la feuille Google.",
     "searchPlaceholder": "Rechercher par nom ou ID...",
@@ -513,6 +518,7 @@ const TRANSLATIONS = {
     "searchPlaceholder": "Kullanıcı adı veya Character ID ara...",
     "quickSort": "Hızlı sıralama:",
     "totalPlayersOver25": "25M üstü oyuncular",
+    "deadDkpFromFiller": "Filler'dan Gelen Dead DKP",
     "totalAdjustedDkp": "Toplam Düzeltilmiş DKP",
     "averageTotalGoal": "Ort. Toplam DKP Hedef %",
     "below70Over25": "25M üstü %70 altı toplam hedef",
@@ -602,6 +608,7 @@ const TRANSLATIONS = {
     "averageTotalGoal": "TB mục tiêu DKP tổng %",
     "below70Over25": "Dưới 70% mục tiêu tổng trên 25M",
     "topAdjustedDkp": "Top DKP điều chỉnh",
+    "deadDkpFromFiller": "Dead DKP từ tài khoản phụ",
     "topTotalGoal": "Top mục tiêu DKP tổng %",
     "topDeadGoal": "Top mục tiêu Dead DKP %",
     "below70TotalGoal": "Dưới 70% mục tiêu DKP tổng",
@@ -694,6 +701,7 @@ const TRANSLATIONS = {
     "characterId": "Character ID",
     "username": "Nazwa gracza",
     "power": "Moc",
+    "deadDkpFromFiller": "Dead DKP od fillerów",
     "highestPower": "Najwyższa moc",
     "dkp": "DKP",
     "adjustedDkp": "Skorygowane DKP",
@@ -919,6 +927,7 @@ function syncDetailsTableHeaders() {
     <th data-sort="t5Deaths" data-i18n="t5Deaths">T5 Deaths</th>
     <th data-sort="t4Deaths" data-i18n="t4Deaths">T4 Deaths</th>
     <th data-sort="deadGoalT5Equiv" data-i18n="deadGoalT5Equiv">Dead Goal (T5)</th>
+    <th data-sort="deadDkpFromFiller" data-i18n="deadDkpFromFiller">Dead DKP from Filler</th>
     <th data-sort="reduction" data-i18n="reduction">Reduction</th>
   `;
 
@@ -976,6 +985,7 @@ function renderTable() {
         ${formatNumber(player.t4Deaths)}
       </td>
       <td>${formatNumber(player.deadGoalT5Equiv)}</td>
+      <td>${formatNumber(player.deadDkpFromFiller)}</td>
       <td class="${reductionClass(player.reduction)}">${formatPercent(player.reduction)}</td>
     </tr>
   `).join("");
