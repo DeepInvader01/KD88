@@ -1,5 +1,5 @@
 let players = [];
-let sortKey = "adjustedDkp";
+let sortKey = "power";
 let sortDirection = "desc";
 
 const headerMap = {
