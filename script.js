@@ -161,6 +161,7 @@ function rowsToPlayers(rows) {
         power: parseNumber(getValue(row, headers, "power")),
         highestPower: parseNumber(getValue(row, headers, "highestPower")),
         dkp: parseNumber(getValue(row, headers, "dkp")),
+        dkpDeads: parseNumber(getValue(row, headers, "dkpDeads")),
         adjustedDkp,
         reduction: normalizePercent(getValue(row, headers, "reduction")),
         dkpGoal,
@@ -330,6 +331,7 @@ const TRANSLATIONS = {
     "dataDisclaimer": "Data Disclaimer",
     "footerText": "All data, calculations, analysis and presentation on this website are provided and maintained by",
     "footerUnofficial": "This is an unofficial community project and is not affiliated with Lilith Games or Rise of Kingdoms.",
+    "dkpDeads": "Dead DKP",
     "languageSelection": "Language selection"
   },
   "de": {
@@ -411,6 +413,7 @@ const TRANSLATIONS = {
     "info6Text": "DKP steht für sinnvolle Teilnahme:",
     "killsMatter": "Kills zählen.",
     "deadsMatter": "Deads zählen.",
+    "dkpDeads": "Todes-DKP",
     "activityMatter": "Aktivität zählt.",
     "info6End": "Für ein faires und angenehmes Umfeld für alle.",
     "dataDisclaimer": "Datenhinweis",
@@ -425,6 +428,7 @@ const TRANSLATIONS = {
     "navDetails": "Stats détaillées",
     "navInfo": "Informations sur le calcul du DKP",
     "dataset": "Données",
+    "dkpDeads": "DKP des pertes",
     "reloadData": "Recharger",
     "loading": "Chargement...",
     "deadDkpFromFiller": "DKP de morts des fillers",
@@ -588,7 +592,8 @@ const TRANSLATIONS = {
     "dataDisclaimer": "Veri açıklaması",
     "footerText": "Bu sitedeki tüm veriler, hesaplamalar, analizler ve sunumlar şu kişi tarafından sağlanır ve yönetilir:",
     "footerUnofficial": "Bu resmi olmayan bir topluluk projesidir ve Lilith Games veya Rise of Kingdoms ile bağlantılı değildir.",
-    "languageSelection": "Dil seçimi"
+    "languageSelection": "Dil seçimi",
+    "dkpDeads": "Ölüm DKP"
   },
   "vi": {
     "heroKicker": "Vương quốc 3688",
@@ -639,6 +644,7 @@ const TRANSLATIONS = {
     "t5Kills": "T5 Kills",
     "t4Deads": "T4 Deads",
     "t5Deads": "T5 Deads",
+    "dkpDeads": "DKP từ quân chết",
     "onePoint": "1 điểm",
     "twoPoints": "2 điểm",
     "sevenHalfPoints": "7.5 điểm",
@@ -760,7 +766,8 @@ const TRANSLATIONS = {
     "dataDisclaimer": "Informacja o danych",
     "footerText": "Wszystkie dane, obliczenia, analizy i prezentacje na tej stronie są dostarczane i utrzymywane przez",
     "footerUnofficial": "To nieoficjalny projekt społecznościowy i nie jest powiązany z Lilith Games ani Rise of Kingdoms.",
-    "languageSelection": "Wybór języka"
+    "languageSelection": "Wybór języka",
+    "dkpDeads": "DKP za poległych"
   }
 };
 
@@ -919,6 +926,7 @@ function syncDetailsTableHeaders() {
     <th data-sort="username" data-i18n="username">Username</th>
     <th data-sort="power" data-i18n="power">Power</th>
     <th data-sort="dkp" data-i18n="dkp">DKP</th>
+    <th data-sort="dkpDeads" data-i18n="dkpDeads">Dead DKP</th>
     <th data-sort="adjustedDkp" data-i18n="adjustedDkp">Adjusted DKP</th>
     <th data-sort="dkpGoal" data-i18n="dkpGoal">DKP Goal</th>
     <th data-sort="goalPercent" data-i18n="totalDkpGoalPercent">Total DKP Goal %</th>
@@ -972,6 +980,7 @@ function renderTable() {
       <td>${player.username}</td>
       <td>${formatNumber(player.power)}</td>
       <td>${formatNumber(player.dkp)}</td>
+      <td>${formatNumber(player.dkpDeads)}</td>
       <td>${formatNumber(player.adjustedDkp)}</td>
       <td>${formatNumber(player.dkpGoal)}</td>
       <td class="${metricClass(player.goalPercent)}">${formatPercent(player.goalPercent)}</td>
