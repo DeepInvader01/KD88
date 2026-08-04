@@ -934,9 +934,9 @@ function syncDetailsTableHeaders() {
     <th data-sort="totalKp" data-i18n="totalKp">Total KP</th>
     <th data-sort="t5Deaths" data-i18n="t5Deaths">T5 Deaths</th>
     <th data-sort="t4Deaths" data-i18n="t4Deaths">T4 Deaths</th>
-    <th data-sort="deadGoalT5Equiv" data-i18n="deadGoalT5Equiv">Dead Goal (T5)</th>
     <th data-sort="deadDkpFromFiller" data-i18n="deadDkpFromFiller">Dead DKP from Filler</th>
     <th data-sort="reduction" data-i18n="reduction">Reduction</th>
+    <th data-sort="deadGoalT5Equiv" data-i18n="deadGoalT5Equiv">Dead Goal (T5)</th>
   `;
 
   document.querySelectorAll("#statsTable th").forEach(header => {
@@ -993,9 +993,9 @@ function renderTable() {
       <td class="${player.zeroed ? 'zeroed-deaths' : ''}">
         ${formatNumber(player.t4Deaths)}
       </td>
-      <td>${formatNumber(player.deadGoalT5Equiv)}</td>
       <td>${formatNumber(player.deadDkpFromFiller)}</td>
       <td class="${reductionClass(player.reduction)}">${formatPercent(player.reduction)}</td>
+      <td>${formatNumber(player.deadGoalT5Equiv)}</td>
     </tr>
   `).join("");
 }
