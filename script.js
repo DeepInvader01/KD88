@@ -977,7 +977,9 @@ function renderTable() {
     <tr>
       <td>${index + 1}</td>
       <td>${player.characterId}</td>
-      <td>${player.username}</td>
+      <td class="${player.zeroed ? 'zeroed-deaths' : ''}">
+         ${player.username}
+      </td>
       <td>${formatNumber(player.power)}</td>
       <td>${formatNumber(player.dkp)}</td>
       <td>${formatNumber(player.dkpDeads)}</td>
