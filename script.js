@@ -24,7 +24,8 @@ const headerMap = {
   deadGoalT5Equiv: ["Dead Goal T5 Equiv", "Dead Goal (T5)", "T5 Equiv"],
   totalKp: ["Total Kill Points", "Total KP"],
   t5Kills: ["T5 Kills"],
-  t4Kills: ["T4 Kills"]
+  t4Kills: ["T4 Kills"],
+  zeroed: ["Zeroed"]
 };
 
 function getCsvUrl(sheetName) {
@@ -168,6 +169,7 @@ function rowsToPlayers(rows) {
         t5Deaths: parseNumber(getValue(row, headers, "t5Deaths")),
         t4Deaths: parseNumber(getValue(row, headers, "t4Deaths")),
         deadGoalT5Equiv: parseNumber(getValue(row, headers, "deadGoalT5Equiv")),
+        zeroed: String(getValue(row, headers, "zeroed")).trim(),
         raw: row
       };
     })
@@ -966,8 +968,13 @@ function renderTable() {
       <td class="${metricClass(player.goalPercent)}">${formatPercent(player.goalPercent)}</td>
       <td class="${metricClass(player.deadDkpAchieved)}">${formatPercent(player.deadDkpAchieved)}</td>
       <td>${formatNumber(player.totalKp)}</td>
-      <td>${formatNumber(player.t5Deaths)}</td>
-      <td>${formatNumber(player.t4Deaths)}</td>
+      <td class="${player.zeroed ? 'zeroed-deaths' : ''}">
+        ${formatNumber(player.t5Deaths)}
+      </td>
+      
+      <td class="${player.zeroed ? 'zeroed-deaths' : ''}">
+        ${formatNumber(player.t4Deaths)}
+      </td>
       <td>${formatNumber(player.deadGoalT5Equiv)}</td>
       <td class="${reductionClass(player.reduction)}">${formatPercent(player.reduction)}</td>
     </tr>
