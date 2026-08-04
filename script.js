@@ -13,6 +13,7 @@ const headerMap = {
   adjustedDkp: ["Adjusted DKP"],
   reduction: ["Reduction"],
   dkpGoal: ["DKP Goal"],
+  trade: ["Trade"],
   minDeadDkp: ["Min Dead DKP"],
   goalPercent: ["Normal DKP Goal", "Goal %", "% Goal"],
   deadDkpAchieved: ["Dead DKP Achieved"],
@@ -165,6 +166,7 @@ function rowsToPlayers(rows) {
         adjustedDkp,
         reduction: normalizePercent(getValue(row, headers, "reduction")),
         dkpGoal,
+        trade: parseNumber(getValue(row, headers, "trade")),
         goalPercent: goalPercentRaw !== "" ? parseNumber(goalPercentRaw) : (dkpGoal > 0 ? adjustedDkp / dkpGoal : 0),
         deadDkpAchieved: parseNumber(getValue(row, headers, "deadDkpAchieved")),
         totalKp: parseNumber(getValue(row, headers, "totalKp")),
@@ -929,6 +931,7 @@ function syncDetailsTableHeaders() {
     <th data-sort="dkpDeads" data-i18n="dkpDeads">Dead DKP</th>
     <th data-sort="adjustedDkp" data-i18n="adjustedDkp">Adjusted DKP</th>
     <th data-sort="dkpGoal" data-i18n="dkpGoal">DKP Goal</th>
+    <th data-sort="trade" data-i18n="trade">Trade</th>
     <th data-sort="goalPercent" data-i18n="totalDkpGoalPercent">Total DKP Goal %</th>
     <th data-sort="deadDkpAchieved" data-i18n="deadDkpGoalPercent">Dead DKP Goal %</th>
     <th data-sort="totalKp" data-i18n="totalKp">Total KP</th>
@@ -985,6 +988,7 @@ function renderTable() {
       <td>${formatNumber(player.dkpDeads)}</td>
       <td>${formatNumber(player.adjustedDkp)}</td>
       <td>${formatNumber(player.dkpGoal)}</td>
+      <td class="${metricClass(player.trade)}">${formatPercent(player.trade)}</td>
       <td class="${metricClass(player.goalPercent)}">${formatPercent(player.goalPercent)}</td>
       <td class="${metricClass(player.deadDkpAchieved)}">${formatPercent(player.deadDkpAchieved)}</td>
       <td>${formatNumber(player.totalKp)}</td>
