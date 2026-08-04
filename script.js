@@ -244,7 +244,11 @@ function reductionClass(value) {
 
 function getActivePlayers() {
   const threshold = CONFIG.activePlayerThreshold ?? 25000000;
-  return players.filter(p => Number(p.power || 0) >= threshold);
+
+  return players.filter(player =>
+    Number(player.power || 0) >= threshold &&
+    !player.zeroed
+  );
 }
 
 
@@ -838,7 +842,12 @@ function setupDatasetSelector() {
 function renderDashboard() {
   const activePlayers = getActivePlayers();
   const totalPlayers = activePlayers.length;
-  const totalDkp = players.reduce((sum, p) => sum + Number(p.adjustedDkp || 0), 0);
+  const totalDkp = players
+  .filter(player => !player.zeroed)
+  .reduce(
+    (sum, player) => sum + Number(player.adjustedDkp || 0),
+    0
+  );
   const avgGoal = activePlayers.length
     ? activePlayers.reduce((sum, p) => sum + Number(p.goalPercent || 0), 0) / activePlayers.length
     : 0;
@@ -857,7 +866,7 @@ function renderDashboard() {
 
 function renderTopList(elementId, key, formatter, percentStyle = false) {
   const container = document.getElementById(elementId);
-  const top = [...players].sort((a, b) => b[key] - a[key]).slice(0, 10);
+  const top = [...players.filter(player => !player.zeroed)].sort((a, b) => b[key] - a[key]).slice(0, 10);
 
   container.innerHTML = top.map((player, index) => `
     <div class="ranking-row">
@@ -873,7 +882,7 @@ function renderTopList(elementId, key, formatter, percentStyle = false) {
 
 function renderTopDeadGoalList() {
   const container = document.getElementById("topDeadDkp");
-  const top = [...players]
+  const top = [...players.filter(player => !player.zeroed)]
     .sort((a, b) => b.deadDkpAchieved - a.deadDkpAchieved)
     .slice(0, 10);
 
