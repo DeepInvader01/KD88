@@ -729,3 +729,8 @@ main {
   font-size: 12px;
   min-width: 76px;
 }
+
+.zeroed-deaths {
+    color: #ff6b6b;
+    font-weight: 600;
+}
