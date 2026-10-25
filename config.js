@@ -8,7 +8,7 @@ const CONFIG = {
   defaultDataset: "KvK8_MA_Start",
 
   datasets: [
-    { label: "KvK9 • Start", sheetName: "KvK8_MA_Start" },
+    { label: "KvK8 MA • Start", sheetName: "KvK8_MA_Start" },
     { label: "KvK7 • Total", sheetName: "KvK7_Total" },
     { label: "KvK7 • Start", sheetName: "KvK7_Start" },
     { label: "KvK6 • Total", sheetName: "KvK6_Total" }
